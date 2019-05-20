@@ -11,14 +11,21 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
+const {hello} = require('./readMessageFromFile');
+
 const wp = require('@cypress/webpack-preprocessor')
 
 module.exports = (on, config) => {
+
+  config.env['hello'] = hello;
+
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
   const options = {
     webpackOptions: require('../../webpack.config'),
   }
   on('file:preprocessor', wp(options))
+
+  return config;
 }
 
